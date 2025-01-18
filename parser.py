@@ -2,6 +2,9 @@ import re
 from ada_url import parse_url
 import time
 import sql_updater
+import aiohttp
+import asyncio
+from concurrent.futures import ThreadPoolExecutor
 
 
 # get all files in the files directory and print them nicely
@@ -12,6 +15,26 @@ import sql_updater
 # fileDirectory = "files" + "\\"
 #
 # toOperate = rootpath + fileDirectory + "sample.txt"
+#
+async def fetch_status(session, url):
+    try:
+        async with session.get(url, timeout=5) as response:
+            return url, response.status
+    except Exception as e:
+        return url, f"Error: {e}"
+
+
+async def fetch_all_statuses(urls):
+    """
+    Fetches the HTTP status codes for all URLs concurrently.
+    :param urls: List of URLs to check.
+    :return: List of tuples (URL, status_code or error message).
+    """
+    async with aiohttp.ClientSession() as session:
+        tasks = [fetch_status(session, url) for url in urls]
+        return await asyncio.gather(*tasks)
+
+
 def parse_data():
     toOperate = "./files/sample.txt"
     userPasswordPattern = r":[^:]+:[^:]+$"
@@ -22,12 +45,6 @@ def parse_data():
     print(parse_url("https://cst-proxy-02.isqft.com8080"))
     start = time.time()
     with open(toOperate, encoding="utf-8", errors="ignore") as f:
-        linenum = 1
-        # for line in f:
-        #     if line.__len__() > 0:
-        #         resultList.append(str(urlparse(line)))
-        # print("{:.2f} seconds for urllib".format(time.time() - start))
-
         for line in f:
             line2 = re.sub(userPasswordPattern, "", line)
             if line.__len__() > 0:
@@ -45,7 +62,6 @@ def parse_data():
                     adaList.append(adaObj)
                 except ValueError:
                     errorList.append(line)
-                linenum += 1
 
     # print(errorList)
     print(len(errorList))
@@ -86,9 +102,25 @@ def parse_data():
                 "hash": "",
             }
         )
-    print(adaList[1])
+    combined_data = adaList + parsed_data
+    urls = [
+        entry["href"] for entry in combined_data if "href" in entry and entry["href"]
+    ]
+
+    # Fetch status codes asynchronously
+    print(f"Fetching status codes for {len(urls)} URLs...")
+    status_codes = asyncio.run(fetch_all_statuses(urls))
+
+    # Map status codes back to the combined data
+    status_code_map = {url: status for url, status in status_codes}
+    for entry in combined_data:
+        entry["status_code"] = status_code_map.get(entry["href"], None)
+
+    print(f"{len(urls)} URLs processed in {time.time() - start:.2f} seconds.")
+    print(combined_data[1])
+    return combined_data
     print("{:.2f} seconds for ada_url".format(time.time() - start))
-    # print(parsed_data[110:120])
+    print(adaList[1])
     return adaList + parsed_data
 
 
@@ -117,3 +149,4 @@ table_name = "parsed_urls"
 
 
 sql_updater.insert_data_in_batches(parse_data(), db_config, table_name)
+# parse_data()
