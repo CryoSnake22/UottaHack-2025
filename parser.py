@@ -16,7 +16,7 @@ resultList = []
 adaList = []
 errorList = []
 
-print(parse_url("https://btcs.love"))
+print(parse_url("https://cst-proxy-02.isqft.com8080"))
 with open(toOperate, encoding="utf-8", errors="ignore") as f:
     start = time.time()
     linenum = 1
@@ -27,10 +27,10 @@ with open(toOperate, encoding="utf-8", errors="ignore") as f:
 
     start = time.time()
     for line in f:
-        line = re.sub(r":[^:]+:[^:]+$","",line)
+        line2 = re.sub(r":[^:]+:[^:]+$","",line)
         if line.__len__() > 0:
             try:
-                adaList.append(parse_url(line))
+                adaList.append(parse_url(line2))
             except ValueError:
                 errorList.append(line)
             linenum += 1
@@ -38,3 +38,6 @@ with open(toOperate, encoding="utf-8", errors="ignore") as f:
     print("{:.2f} seconds for ada_url".format(time.time() - start))
 # print(errorList)
 print(len(errorList))
+with open(rootpath + "files/oddOnes.txt", encoding="utf-8", mode="w") as f:
+    for item in errorList:
+        f.write("%s" % item)
