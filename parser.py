@@ -4,14 +4,14 @@ from urllib.parse import urlparse
 from ada_url import parse_url
 import time
 
-#get all files in the files directory and print them nicely
+# get all files in the files directory and print them nicely
 
 
 rootpath = os.getcwd() + "\\"
 
 fileDirectory = "files" + "\\"
 
-toOperate = rootpath + fileDirectory +"sample.txt"
+toOperate = rootpath + fileDirectory + "sample.txt"
 resultList = []
 adaList = []
 errorList = []
@@ -27,7 +27,7 @@ with open(toOperate, encoding="utf-8", errors="ignore") as f:
 
     start = time.time()
     for line in f:
-        line = re.sub(r":[^:]+:[^:]+$","",line)
+        line = re.sub(r":[^:]+:[^:]+$", "", line)
         if line.__len__() > 0:
             try:
                 adaList.append(parse_url(line))
@@ -38,3 +38,4 @@ with open(toOperate, encoding="utf-8", errors="ignore") as f:
     print("{:.2f} seconds for ada_url".format(time.time() - start))
 # print(errorList)
 print(len(errorList))
+
