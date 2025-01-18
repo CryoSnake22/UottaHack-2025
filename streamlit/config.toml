@@ -1,0 +1,8 @@
+[theme]
+primaryColor = "#4CAF50"  # Customize primary color
+backgroundColor = "#FFFFFF"  # Background color for light mode
+secondaryBackgroundColor = "#F0F0F0"  # Sidebar background for light mode
+textColor = "#000000"  # Text color for light mode
+font = "sans serif"  # Font style
+
+base = "auto"  # Automatically switch between light and dark mode
