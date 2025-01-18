@@ -1,0 +1,99 @@
+[33mcommit 2130ba58fcefe345daf46211dfb3aa474616272c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: King-Mart <ken.mart.d@gmail.com>
+Date:   Sat Jan 18 03:56:39 2025 -0500
+
+    right ignore values
+
+[33mcommit 33fe9236e7d364901f3c6c450e37413aeeb18546[m
+Author: King-Mart <ken.mart.d@gmail.com>
+Date:   Sat Jan 18 03:53:48 2025 -0500
+
+    this should work now
+
+[33mcommit d3ed5a0c246b78f43dd3c1fcc8cc97fcc82e5881[m
+Merge: e035631 a1a875e
+Author: King-Mart <ken.mart.d@gmail.com>
+Date:   Sat Jan 18 03:50:33 2025 -0500
+
+    Merge branch 'main' of https://github.com/CryoSnake22/UottaHack-2025
+
+[33mcommit e035631e29dfb44e9d724f388f67b03e4c8b71b2[m
+Author: King-Mart <ken.mart.d@gmail.com>
+Date:   Sat Jan 18 03:50:30 2025 -0500
+
+    deletions
+
+[33mcommit a1a875e4cb67d5a2725351f308d2bb644db20078[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: CryoSnake22 <65683733+CryoSnake22@users.noreply.github.com>
+Date:   Sat Jan 18 03:48:49 2025 -0500
+
+    deleted
+
+[33mcommit f8ae95178ba04598585caac6a15d03cd2d3dae29[m
+Merge: bc543f4 9d853f6
+Author: King-Mart <ken.mart.d@gmail.com>
+Date:   Sat Jan 18 03:47:52 2025 -0500
+
+    Merge branch 'main' of https://github.com/CryoSnake22/UottaHack-2025
+    yes
+
+[33mcommit 9d853f6ab36913e32f9d7148ca6878edab625eb6[m
+Author: CryoSnake22 <65683733+CryoSnake22@users.noreply.github.com>
+Date:   Sat Jan 18 03:46:04 2025 -0500
+
+    parser
+
+[33mcommit bc543f46e83af6d5e8b1dd9d9ea0dc4df1849893[m
+Author: King-Mart <ken.mart.d@gmail.com>
+Date:   Sat Jan 18 03:43:33 2025 -0500
+
+    protecting your files
+
+[33mcommit 12769ca24d9b9f1b75f411b4f0e2ed53cc785317[m
+Merge: 11957d5 eae2d33
+Author: King-Mart <ken.mart.d@gmail.com>
+Date:   Sat Jan 18 03:40:29 2025 -0500
+
+    Merge branch 'main' of https://github.com/CryoSnake22/UottaHack-2025
+
+[33mcommit 11957d5de9b16d56d31fcc11bf635642faa246fc[m
+Author: King-Mart <ken.mart.d@gmail.com>
+Date:   Sat Jan 18 03:40:26 2025 -0500
+
+    base file processing
+
+[33mcommit eae2d3378120aa369169a42627459c36579705ee[m
+Author: CryoSnake22 <65683733+CryoSnake22@users.noreply.github.com>
+Date:   Sat Jan 18 03:38:50 2025 -0500
+
+    fix
+
+[33mcommit 768bffdc6e297ebccc0e7af1d1c8c56ac2bc664f[m
+Author: Évence Batobo <126938639+Asvo777@users.noreply.github.com>
+Date:   Sat Jan 18 03:29:40 2025 -0500
+
+    Add app.py
+
+[33mcommit 9a52be3ee3d0688108a0388c2adad3419579387f[m[33m ([m[1;31morigin/parsing-test[m[33m)[m
+Author: CryoSnake22 <65683733+CryoSnake22@users.noreply.github.com>
+Date:   Thu Jan 16 12:23:57 2025 -0500
+
+    up
+
+[33mcommit 99c213f0fe356d084139099da5d7677168a4732e[m
+Author: CryoSnake22 <65683733+CryoSnake22@users.noreply.github.com>
+Date:   Thu Jan 16 12:18:50 2025 -0500
+
+    added todolist
+
+[33mcommit 6bd9296e20c7fbe7e059d6aac29732bcba99680d[m
+Author: CryoSnake22 <65683733+CryoSnake22@users.noreply.github.com>
+Date:   Thu Jan 16 12:17:33 2025 -0500
+
+    initial commit
+
+[33mcommit 2c4a4f544f9f142c996b3e8bd1ea13cff33e5c7f[m
+Author: CharloPL <65683733+CryoSnake22@users.noreply.github.com>
+Date:   Thu Jan 16 12:16:05 2025 -0500
+
+    Initial commit
