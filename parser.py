@@ -4,8 +4,7 @@ import time
 import sql_updater
 import aiohttp
 import asyncio
-from concurrent.futures import ThreadPoolExecutor
-
+from aiohttp import ClientError
 
 # get all files in the files directory and print them nicely
 
