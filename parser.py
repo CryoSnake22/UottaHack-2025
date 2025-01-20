@@ -1,10 +1,8 @@
 import re
 from ada_url import parse_url
 import time
-import sql_updater
 import aiohttp
 import asyncio
-from aiohttp import ClientError
 
 # get all files in the files directory and print them nicely
 
@@ -15,9 +13,10 @@ from aiohttp import ClientError
 #
 # toOperate = rootpath + fileDirectory + "sample.txt"
 #
-async def fetch_status(session, url):
+async def fetch_status(session, url) -> tuple:
     try:
         async with session.get(url, timeout=5) as response:
+            print(response.status)
             return url, response.status
     except Exception as e:
         return url, f"Error: {e}"
@@ -29,18 +28,19 @@ async def fetch_all_statuses(urls):
     :param urls: List of URLs to check.
     :return: List of tuples (URL, status_code or error message).
     """
+    tasks = []
     async with aiohttp.ClientSession() as session:
-        tasks = [fetch_status(session, url) for url in urls]
+        for url in urls:
+            status = fetch_status(session, url)
+            tasks.append(status)
         return await asyncio.gather(*tasks)
 
 
 def parse_data():
     toOperate = "./files/sample.txt"
     userPasswordPattern = r":[^:]+:[^:]+$"
-    resultList = []
     adaList = []
     errorList = []
-
     print(parse_url("https://cst-proxy-02.isqft.com8080"))
     start = time.time()
     with open(toOperate, encoding="utf-8", errors="ignore") as f:
@@ -51,14 +51,18 @@ def parse_data():
                     username_password = re.search(userPasswordPattern, line)
                     user = ""
                     pas = ""
+                    adaObj = parse_url(line2)
+                    adadada = dict(adaObj)
+                    adadada["username"] = ""
+                    adadada["password"] = ""
+                    adadada["application"] = ""
                     if username_password:
                         user = username_password.group(0)[1:].split(":")[0]
                         pas = username_password.group(0)[1:].split(":")[1]
-                        adaObj = parse_url(line2)
-                        adaObj["username"] = user
-                        adaObj["password"] = pas
-                        adaObj["application"] = ""
-                    adaList.append(adaObj)
+                        adadada["username"] = user
+                        adadada["password"] = pas
+                        adadada["application"] = ""
+                    adaList.append(adadada)
                 except ValueError:
                     errorList.append(line)
 
@@ -102,25 +106,20 @@ def parse_data():
             }
         )
     combined_data = adaList + parsed_data
-    urls = [
-        entry["href"] for entry in combined_data if "href" in entry and entry["href"]
-    ]
+    urls = [entry["href"] for entry in combined_data]
 
     # Fetch status codes asynchronously
     print(f"Fetching status codes for {len(urls)} URLs...")
     status_codes = asyncio.run(fetch_all_statuses(urls))
+    print(status_codes[1])
 
     # Map status codes back to the combined data
     status_code_map = {url: status for url, status in status_codes}
     for entry in combined_data:
-        entry["status_code"] = status_code_map.get(entry["href"], None)
+        entry["status"] = status_code_map.get(entry["href"], None)
 
     print(f"{len(urls)} URLs processed in {time.time() - start:.2f} seconds.")
-    print(combined_data[1])
     return combined_data
-    print("{:.2f} seconds for ada_url".format(time.time() - start))
-    print(adaList[1])
-    return adaList + parsed_data
 
 
 db_config = {
@@ -147,5 +146,5 @@ table_name = "parsed_urls"
 # ]
 
 
-sql_updater.insert_data_in_batches(parse_data(), db_config, table_name)
-# parse_data()
+# sql_updater.insert_data_in_batches(parse_data(), db_config, table_name)
+parse_data()

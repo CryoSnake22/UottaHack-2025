@@ -29,19 +29,17 @@ def insert_data_in_batches(data, db_config, table_name, batch_size=10000):
                     item.get("search"),
                     item.get("hash"),
                     item.get("application"),
+                    item.get("status"),
                 )
             )
 
-            # INSERT INTO {table_name}
-            # (href, username, password, protocol, host, port, hostname, pathname, search, hash, application)
-            # VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)
         if len(batch) >= batch_size:
             cursor.executemany(
                 f"""
 
                 INSERT INTO {table_name} 
-                (href, username, password, protocol, host, port, hostname, pathname, search, hash, application) 
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                (href, username, password, protocol, host, port, hostname, pathname, search, hash, application, status) 
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)
                 ON DUPLICATE KEY UPDATE 
                 username = VALUES(username),
                 password = VALUES(password),
@@ -52,24 +50,22 @@ def insert_data_in_batches(data, db_config, table_name, batch_size=10000):
                 pathname = VALUES(pathname),
                 search = VALUES(search),
                 hash = VALUES(hash),
-                application = VALUES(application);
+                application = VALUES(application),
+                status = VALUES(status)
                 """,
                 batch,
             )
             conn.commit()
             batch = []  # Reset batch after inserting
 
-            # INSERT INTO {table_name}
-            # (href, username, password, protocol, host, port, hostname, pathname, search, hash, application)
-            # VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)
     if batch:
         cursor.executemany(
             f"""
 
 
             INSERT INTO {table_name} 
-            (href, username, password, protocol, host, port, hostname, pathname, search, hash, application) 
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            (href, username, password, protocol, host, port, hostname, pathname, search, hash, application, status) 
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)
             ON DUPLICATE KEY UPDATE 
             username = VALUES(username),
             password = VALUES(password),
@@ -80,7 +76,8 @@ def insert_data_in_batches(data, db_config, table_name, batch_size=10000):
             pathname = VALUES(pathname),
             search = VALUES(search),
             hash = VALUES(hash),
-            application = VALUES(application);
+            application = VALUES(application),
+            status = VALUES(status)
             """,
             batch,
         )
